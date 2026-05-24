@@ -21,8 +21,13 @@ const ROLES: { value: UserRole; label: string }[] = [
 const schema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Enter a valid email'),
-  role: z.enum(['customer', 'designer', 'merchant', 'agent', 'admin'] as const),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  role: z.enum(['customer', 'designer', 'merchant', 'agent'] as const),
+  password: z
+    .string()
+    .min(8, 'At least 8 characters')
+    .regex(/[A-Z]/, 'Must contain an uppercase letter')
+    .regex(/[a-z]/, 'Must contain a lowercase letter')
+    .regex(/[0-9]/, 'Must contain a number'),
   confirmPassword: z.string(),
 }).refine((d) => d.password === d.confirmPassword, {
   message: "Passwords don't match",
