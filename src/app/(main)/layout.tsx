@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store';
 import { useSocket } from '@/hooks';
@@ -10,15 +10,35 @@ import { TopNav } from '@/components/layout/TopNav';
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, fetchMe } = useAuthStore();
   const router = useRouter();
+  const [ready, setReady] = useState(false);
 
-  // Initialize socket connection for authenticated users
   useSocket();
 
   useEffect(() => {
-    fetchMe().catch(() => router.replace('/login'));
+    fetchMe()
+      .then(() => setReady(true))
+      .catch(() => router.replace('/login'));
   }, [fetchMe, router]);
 
-  if (!isAuthenticated) return null;
+  // Don't render anything until fetchMe resolves —
+  // prevents TopNav from rendering with user = null
+  if (!ready || !isAuthenticated) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          background: 'var(--bg-0)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--text-3)',
+          fontSize: 14,
+        }}
+      >
+        Loading…
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-0)' }}>
