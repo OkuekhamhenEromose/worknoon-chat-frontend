@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Syne:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-0: #0d0f14;
+    --bg-1: #13161d;
+    --bg-2: #1a1e28;
+    --bg-3: #222736;
+    --bg-4: #2a2f3f;
+    --accent: #6c63ff;
+    --accent-2: #a78bfa;
+    --accent-3: #38bdf8;
+    --green: #22d3a4;
+    --amber: #f59e0b;
+    --red: #f87171;
+    --pink: #f472b6;
+    --text-1: #f1f0ff;
+    --text-2: #a8a4c0;
+    --text-3: #6b6880;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-2: rgba(255, 255, 255, 0.14);
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    background-color: var(--bg-0);
+    color: var(--text-1);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    @apply antialiased;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-2);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .input-base {
+    background: var(--bg-2);
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text-1);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+
+  .input-base:focus {
+    border-color: var(--accent);
+  }
+
+  .input-base::placeholder {
+    color: var(--text-3);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-2);
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-icon:hover {
+    color: var(--text-1);
+    background: var(--bg-3);
+  }
+}
