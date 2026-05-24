@@ -1,5 +1,3 @@
-// ─── User & Auth ────────────────────────────────────────────────────────────
-
 export type UserRole = 'admin' | 'agent' | 'customer' | 'designer' | 'merchant';
 
 export interface User {
