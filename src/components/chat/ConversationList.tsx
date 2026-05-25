@@ -32,16 +32,17 @@ export function ConversationList({ onSelect }: ConversationListProps) {
   const debouncedSearch = useDebounce(search, 200);
 
   const filtered = useMemo(() => {
-    return conversations.filter((conv) => {
-      const other = conv.participants.find((p) => p._id !== user?._id);
-      if (!other) return false;
-      const matchesSearch = debouncedSearch
-        ? other.name.toLowerCase().includes(debouncedSearch.toLowerCase())
-        : true;
-      const matchesRole = filter === 'all' ? true : other.role === filter;
-      return matchesSearch && matchesRole;
-    });
-  }, [conversations, debouncedSearch, filter, user]);
+  if (!conversations?.length) return [];
+  return conversations.filter((conv) => {
+    const other = conv.participants?.find((p) => p._id !== user?._id);
+    if (!other) return false;
+    const matchesSearch = debouncedSearch
+      ? other.name?.toLowerCase().includes(debouncedSearch.toLowerCase())
+      : true;
+    const matchesRole = filter === 'all' ? true : other.role === filter;
+    return matchesSearch && matchesRole;
+  });
+}, [conversations, debouncedSearch, filter, user]);
 
   const handleSelect = (conv: Conversation) => {
     setActiveConversation(conv._id);

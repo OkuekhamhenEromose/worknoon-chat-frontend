@@ -27,7 +27,9 @@ export function Sidebar() {
   const pathname = usePathname();
   const { conversations } = useChatStore();
 
-  const totalUnread = conversations.reduce((acc, c) => acc + (c.unreadCount ?? 0), 0);
+  const totalUnread = (conversations ?? []).reduce(
+  (acc, c) => acc + (c.unreadCount ?? 0), 0
+);
 
   return (
     <nav

@@ -7,12 +7,12 @@ import type {
 } from '@/types';
 
 export const conversationsApi = {
-  create: async (participantId: string, type: ConversationType): Promise<Conversation> => {
-    const { data } = await httpClient.post<ApiResponse<Conversation>>('/conversations', {
+  create: async (participantId: string, conversationType: ConversationType): Promise<Conversation> => {
+    const { data } = await httpClient.post<ApiResponse<{ conversation: Conversation }>>('/conversations', {
       participantId,
-      type,
+      conversationType, // ← FIX: backend expects 'conversationType', not 'type'
     });
-    return data.data;
+    return (data.data as any).conversation ?? data.data;
   },
 
   getAll: async (page = 1, limit = 20): Promise<PaginatedResponse<Conversation>> => {
@@ -23,8 +23,8 @@ export const conversationsApi = {
   },
 
   getById: async (id: string): Promise<Conversation> => {
-    const { data } = await httpClient.get<ApiResponse<Conversation>>(`/conversations/${id}`);
-    return data.data;
+    const { data } = await httpClient.get<ApiResponse<{ conversation: Conversation }>>(`/conversations/${id}`);
+    return (data.data as any).conversation ?? data.data;
   },
 
   delete: async (id: string): Promise<void> => {
